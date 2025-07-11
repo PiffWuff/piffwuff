@@ -109,12 +109,18 @@
     }
 
     h1.animate {
-      display: inline-block;
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 2px solid #ff77aa;
-      animation: typing 3s steps(20) forwards, blink 1s step-end infinite alternate;
+      opacity: 0;
+      transform: translateY(-10px);
+      animation: fadeInUp 1.2s ease forwards;
     }
+
+    @keyframes fadeInUp {
+      to {
+          opacity: 1;
+          transform: translateY(0);
+      }
+    }
+
     body.dark-theme h1.animate {
       border-color: #ff4d9d;
     }
@@ -214,7 +220,7 @@
       <p>No discord server(yet), but maybe I'll make one some day?</p>
       <ul>
         <li><strong>💫 Discord:</strong> piffwuff 💫</li>
-        <li><a href="https://discord.gg/" class="button" target="_blank" rel="noopener noreferrer">🌙 Discord[Soon?] 🌙</a></li>
+        <li><a href="https://discord.gg/" class="button" target="_blank" rel="noopener noreferrer">🌙 Discord Server [Soon?] 🌙</a></li>
       </ul>
     </section>
 
@@ -224,7 +230,7 @@
       <p>If you want to commission something, we can discuss that, of course! But my request bot on Crushon, or even my DMs on discord is better for that!</p>
       <p>Mostly because I'm happy to bots for free unless it's particularly out of my interests.</p>
       <ul>
-        <li><a href="https://ko-fi.com/yourkofigoeshere" class="button" target="_blank" rel="noopener noreferrer">✨ Ko-fi ✨</a></li>
+        <li><a href="https://ko-fi.com/piffwuff" class="button" target="_blank" rel="noopener noreferrer">✨ Ko-fi ✨</a></li>
         <li><a href="https://crushon.ai/en/character/a08a3a47-56e6-4f3e-a19d-613b9db022a2/details?shared=true" class="button" target="_blank" rel="noopener noreferrer">🕯️ Request Bot[CrushOn.AI] 🕯️</a></li>
       </ul>
     </section>
