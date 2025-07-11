@@ -1,308 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PiffWuff | Cozy Chatbot Creator</title>
-<style>
-  /* Google font */
-  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>All sorts of links...</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
 
-  /* Reset and base */
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0; padding: 20px;
-    font-family: 'Quicksand', sans-serif;
-    background-color: #fdfaf6;
-    color: #333;
-    overflow-x: hidden;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  body.dark-theme {
-    background-color: #1a1a1a;
-    color: #fceaff;
-  }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Quicksand', sans-serif;
+      background-color: #fdfaf6;
+      color: #333;
+      overflow-x: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-theme {
+      background-color: #1a1a1a;
+      color: #fceaff;
+    }
 
-  /* Nav */
-  nav {
-    display: flex;
-    justify-content: center;
-    gap: 1.5em;
-    margin-bottom: 2em;
-    background-color: #f5eee6;
-    padding: 1em 0;
-    border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    transition: background-color 0.3s;
-  }
-  body.dark-theme nav {
-    background-color: #2a2a2a;
-  }
-  nav button {
-    background: none;
-    border: none;
-    color: #6d5c55;
-    font-weight: 600;
-    font-size: 1.1rem;
-    cursor: pointer;
-    padding: 0.3em 0.6em;
-    border-radius: 12px;
-    transition:
-      background-color 0.3s,
-      color 0.3s,
-      box-shadow 0.3s;
-  }
-  body.dark-theme nav button {
-    color: #ff77aa;
-  }
-  nav button:hover,
-  nav button.active {
-    background-color: #e8dcd0;
-    color: #3e3e3e;
-    box-shadow: 0 0 8px #ff77aaaa;
-  }
-  body.dark-theme nav button:hover,
-  body.dark-theme nav button.active {
-    background-color: #444;
-    color: #fceaff;
-    box-shadow: 0 0 12px #ff77aacc;
-  }
-
-  /* Theme toggle */
-  #theme-toggle {
-    margin-left: 1em;
-    font-size: 1.2rem;
-  }
-
-  /* Container */
-  .container {
-    max-width: 700px;
-    margin: auto;
-    background: #ffffff;
-    padding: 2em;
-    border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    overflow: hidden;
-    position: relative;
-    min-height: 300px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  body.dark-theme .container {
-    background: #2b2b2b;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  }
-
-  /* Sections */
-  section {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(100%);
-    transition: transform 0.5s ease, opacity 0.5s ease;
-  }
-  section.active {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(0);
-    position: relative;
-  }
-  section.exit-left {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(-100%);
-  }
-
-  /* Animated heading text */
-  h1.animate {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 2px solid #ff77aa;
-    animation:
-      typing 3s steps(20) forwards,
-      blink 1s step-end infinite alternate;
-  }
-  body.dark-theme h1.animate {
-    border-color: #ff4d9d;
-  }
-  @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-  }
-  @keyframes blink {
-    50% { border-color: transparent }
-  }
-
-  /* Buttons and platform links */
-  .button, .platform-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7em;
-    padding: 0.6em 1.2em;
-    border-radius: 12px;
-    font-weight: 600;
-    text-decoration: none;
-    color: #3e3e3e;
-    background: #e8dcd0;
-    transition: background-color 0.3s, box-shadow 0.3s;
-  }
-  .button:hover, .platform-link:hover {
-    background: #d9cfc3;
-    box-shadow: 0 0 8px #ff77aaaa;
-  }
-  body.dark-theme .button,
-  body.dark-theme .platform-link {
-    background: #333;
-    color: #fceaff;
-  }
-  body.dark-theme .button:hover,
-  body.dark-theme .platform-link:hover {
-    background: #444;
-    box-shadow: 0 0 12px #ff77aacc;
-  }
-
-  .platform-link img {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    object-fit: cover;
-  }
-
-  /* Lists */
-  ul {
-    padding-left: 1.2em;
-  }
-
-  /* Responsive */
-  @media (max-width: 600px) {
     nav {
+      display: flex;
+      justify-content: center;
       flex-wrap: wrap;
       gap: 1em;
+      background-color: #f5eee6;
+      padding: 1em;
+      border-radius: 14px;
+      margin-bottom: 2em;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: background-color 0.3s;
     }
-    .platform-link {
-      justify-content: center;
+    body.dark-theme nav {
+      background-color: #2a2a2a;
     }
-  }
-</style>
+    nav button {
+      background: none;
+      border: none;
+      color: #6d5c55;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 0.4em 0.8em;
+      border-radius: 12px;
+      transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    }
+    body.dark-theme nav button {
+      color: #ff77aa;
+    }
+    nav button:hover,
+    nav button.active {
+      background-color: #e8dcd0;
+      color: #3e3e3e;
+      box-shadow: 0 0 8px #ff77aaaa;
+    }
+    body.dark-theme nav button:hover,
+    body.dark-theme nav button.active {
+      background-color: #444;
+      color: #fceaff;
+      box-shadow: 0 0 12px #ff77aacc;
+    }
+
+    #theme-toggle {
+      font-size: 1.4rem;
+      margin-left: 1em;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #ffffff;
+      padding: 2em;
+      border-radius: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      min-height: 300px;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-theme .container {
+      background: #2b2b2b;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    section {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+    section.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      position: relative;
+    }
+    section.exit-up {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+    }
+
+    h1.animate {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid #ff77aa;
+      animation: typing 3s steps(20) forwards, blink 1s step-end infinite alternate;
+    }
+    body.dark-theme h1.animate {
+      border-color: #ff4d9d;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    .button, .platform-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7em;
+      padding: 0.6em 1.2em;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #3e3e3e;
+      background: #e8dcd0;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .button:hover, .platform-link:hover {
+      background: #d9cfc3;
+      box-shadow: 0 0 8px #ff77aaaa;
+    }
+    body.dark-theme .button,
+    body.dark-theme .platform-link {
+      background: #333;
+      color: #fceaff;
+    }
+    body.dark-theme .button:hover,
+    body.dark-theme .platform-link:hover {
+      background: #444;
+      box-shadow: 0 0 12px #ff77aacc;
+    }
+
+    .platform-link img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    ul {
+      padding-left: 1.2em;
+    }
+
+    @media (max-width: 600px) {
+      .platform-link {
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body>
-<nav>
-  <button data-tab="home" class="active">Home</button>
-  <button data-tab="about">About</button>
-  <button data-tab="contact">Contact</button>
-  <button data-tab="support">Support Me</button>
-  <button id="theme-toggle" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">🌙</button>
-</nav>
-
-<div class="container" role="main">
-  <!-- Home Section -->
-  <section id="home" class="active" aria-label="Home section">
-    <h1 class="animate">Hi, I'm PiffWuff!</h1>
-    <p>I make emotionally immersive and spicy-sweet AI chatbots on your favorite platforms. Soft hearts with sharp teeth 💘🖤</p>
-    <h2>My Bots Live Here</h2>
-    <div style="display:flex; flex-direction: column; gap: 1em; margin-top:1em;">
-      <a href="https://crushon.ai" target="_blank" class="platform-link" rel="noopener noreferrer">
-        <img src="assets/crushon.png" alt="CrushOn logo" />
-        CrushOn.ai
-      </a>
-      <a href="https://craveu.com" target="_blank" class="platform-link" rel="noopener noreferrer">
-        <img src="assets/craveu.png" alt="CraveU logo" />
-        CraveU
-      </a>
-      <a href="https://linkin.love" target="_blank" class="platform-link" rel="noopener noreferrer">
-        <img src="assets/linkinlove.png" alt="Linkin.Love logo" />
-        Linkin.Love
-      </a>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" aria-label="About section">
-    <h1>What I Do</h1>
-    <p>I'm a chatbot creator focused on immersive characters and playful personalities. Whether you're looking for romance, softness, spice, or silly vibes — I design bots that make you feel connected.</p>
-    <p>Each platform has unique bots, tones, and experiences. I’m always updating them and adding new ones, so be sure to check back often!</p>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" aria-label="Contact section">
-    <h1>Get in Touch</h1>
-    <p>Want to collaborate, commission a bot, or just say hi?</p>
-    <ul>
-      <li>Message me on <a href="https://crushon.ai" target="_blank" rel="noopener noreferrer">CrushOn.ai</a></li>
-      <li>Or reach out via <a href="mailto:your.email@example.com">email</a> (replace with yours!)</li>
-    </ul>
-  </section>
-
-  <!-- Support Me Section -->
-  <section id="support" aria-label="Support me section">
-    <h1>Support Me</h1>
-    <p>If you like what I do, consider supporting me!</p>
-    <ul>
-      <li>
-        <a href="https://ko-fi.com/yourkofigoeshere" target="_blank" class="button" rel="noopener noreferrer" style="margin-bottom: 1em;">
-          ❤️ Ko-fi
+  <nav>
+    <button data-tab="home" class="active">⚰️ Home ⚰️</button>
+    <button data-tab="about">🪞 PiffWuff 🪞</button>
+    <button data-tab="contact">📜 Chat 📜</button>
+    <button data-tab="support">🪶 Support Me 🪶</button>
+    <button id="theme-toggle" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">☁️</button>
+  </nav>
+  <div class="container" role="main">
+    <section id="home" class="active" aria-label="Home section">
+      <h1 class="animate">🕯️ Hi loves 🕯️</h1>
+      <p>I'm PiffWuff/Piff! I make chatbots 🌙 And chat with chatbots.</p>
+      <h2>🌑 My bots live here! 🌑</h2>
+      <div style="display:flex; flex-direction: column; gap: 1em; margin-top:1em;">
+        <a href="https://crushon.ai/en/profile/b21d6c94-232a-11f0-bc15-62a593a1fb50?shared=true" target="_blank" class="platform-link" rel="noopener noreferrer">
+          <img src="assets/crushon.png" alt="CrushOn logo" />
+          🌕 CrushOn.ai 🌕
         </a>
-      </li>
-      <li>
-        <a href="https://discord.gg/yourdiscordlink" target="_blank" class="button" rel="noopener noreferrer">
-          💬 Discord
+        <a href="https://craveu.ai/user/svajxF2F" target="_blank" class="platform-link" rel="noopener noreferrer">
+          <img src="assets/craveu.png" alt="CraveU logo" />
+          ✨ CraveU.ai ✨
         </a>
-      </li>
-    </ul>
-  </section>
-</div>
+        <a href="https://linkin.love/creator/piffwuff" target="_blank" class="platform-link" rel="noopener noreferrer">
+          <img src="assets/linkinlove.png" alt="Linkin.Love logo" />
+          🌿 Linkin.Love 🌿
+        </a>
+      </div>
+    </section>
 
-<script>
-  // Tab functionality
-  const tabs = document.querySelectorAll('nav button[data-tab]');
-  const sections = document.querySelectorAll('section');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      // Remove active from all tabs and sections
-      tabs.forEach(t => t.classList.remove('active'));
-      sections.forEach(sec => {
-        sec.classList.remove('active', 'exit-left');
-      });
-      // Add active to clicked tab and its section
-      tab.classList.add('active');
-      const target = document.getElementById(tab.dataset.tab);
-      target.classList.add('active');
+    <section id="about" aria-label="About section">
+      <h1>🌒 Who am I? 🌒</h1>
+      <p>I'm PiffWuff, Piff, Wuff, etc. My name is technically Lyric, but no one calls me that LOL</p>
+      <p>I'm 25, married, work as a substitute teacher when I'm not half dead at home with chronic pain.</p>
+      <p>I started making bots not too long ago, and I am in love with it. It's just so fun to have a character come to life with AI!</p>
+      <p>He/They Pronouns, 5'2", and yes, I don't like cheddar broccoli soup. 😂</p>
+    </section>
 
-      // Animate slide out of others to left (optional)
-      sections.forEach(sec => {
-        if (sec !== target) {
-          sec.classList.add('exit-left');
-        }
+    <section id="contact" aria-label="Contact section">
+      <h1>🫧 Chat with me! 🫧</h1>
+      <p>I'm friendly, so please feel free to chat! My DMs are always open, though I do sleep from 12AM-6/7AM CST.</p>
+      <p>No discord server(yet), but maybe I'll make one some day?</p>
+      <ul>
+        <li><strong>💫 Discord:</strong> piffwuff 💫</li>
+        <li><a href="https://discord.gg/" class="button" target="_blank" rel="noopener noreferrer">🌙 Discord[Soon?] 🌙</a></li>
+      </ul>
+    </section>
+
+    <section id="support" aria-label="Support section">
+      <h1>🌕 Much love and more 🌕</h1>
+      <p>If you've been particularly enjoying the bots, consider popping by my Ko-Fi. Nothing special there, really, just a place to support.</p>
+      <p>If you want to commission something, we can discuss that, of course! But my request bot on Crushon, or even my DMs on discord is better for that!</p>
+      <p>Mostly because I'm happy to bots for free unless it's particularly out of my interests.</p>
+      <ul>
+        <li><a href="https://ko-fi.com/yourkofigoeshere" class="button" target="_blank" rel="noopener noreferrer">✨ Ko-fi ✨</a></li>
+        <li><a href="https://crushon.ai/en/character/a08a3a47-56e6-4f3e-a19d-613b9db022a2/details?shared=true" class="button" target="_blank" rel="noopener noreferrer">🕯️ Request Bot[CrushOn.AI] 🕯️</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('nav button[data-tab]');
+    const sections = document.querySelectorAll('section');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        sections.forEach(sec => sec.classList.remove('active', 'exit-up'));
+
+        tab.classList.add('active');
+        const target = document.getElementById(tab.dataset.tab);
+        target.classList.add('active');
+
+        sections.forEach(sec => {
+          if (sec !== target) sec.classList.add('exit-up');
+        });
       });
     });
-  });
 
-  // Theme toggle
-  const toggleBtn = document.getElementById('theme-toggle');
-  const body = document.body;
-  // Load saved theme or default to light
-  const savedTheme = localStorage.getItem('theme') || 'light-theme';
-  body.classList.add(savedTheme);
-  updateButtonIcon(savedTheme);
+    const toggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    const savedTheme = localStorage.getItem('theme') || 'light-theme';
+    body.classList.add(savedTheme);
+    updateThemeIcon(savedTheme);
 
-  toggleBtn.addEventListener('click', () => {
-    if (body.classList.contains('light-theme')) {
-      body.classList.replace('light-theme', 'dark-theme');
-      localStorage.setItem('theme', 'dark-theme');
-      updateButtonIcon('dark-theme');
-    } else {
-      body.classList.replace('dark-theme', 'light-theme');
-      localStorage.setItem('theme', 'light-theme');
-      updateButtonIcon('light-theme');
+    toggleBtn.addEventListener('click', () => {
+      if (body.classList.contains('light-theme')) {
+        body.classList.replace('light-theme', 'dark-theme');
+        localStorage.setItem('theme', 'dark-theme');
+        updateThemeIcon('dark-theme');
+      } else {
+        body.classList.replace('dark-theme', 'light-theme');
+        localStorage.setItem('theme', 'light-theme');
+        updateThemeIcon('light-theme');
+      }
+    });
+
+    function updateThemeIcon(theme) {
+      toggleBtn.textContent = theme === 'light-theme' ? '☁️' : '🔮';
     }
-  });
-
-  function updateButtonIcon(theme) {
-    toggleBtn.textContent = theme === 'light-theme' ? '🌙' : '☀️';
-  }
-</script>
+  </script>
 </body>
 </html>
