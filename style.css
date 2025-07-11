@@ -1,73 +1,72 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
-
-body {
-  margin: 0;
-  font-family: 'Quicksand', sans-serif;
-  background-color: #1a1a1a;
-  color: #fceaff;
-  padding: 20px;
+/* Default light theme styles (cozy pastel) */
+body.light-theme {
+  background-color: #fdfaf6;
+  color: #333;
 }
 
-nav {
-  background-color: #2a2a2a;
-  padding: 1em;
-  text-align: center;
-  border-radius: 14px;
-  margin-bottom: 2em;
+body.light-theme nav {
+  background-color: #f5eee6;
+  color: #6d5c55;
 }
 
-nav a {
-  margin: 0 15px;
-  color: #ff77aa;
-  text-decoration: none;
-  font-weight: bold;
+body.light-theme nav a {
+  color: #6d5c55;
 }
 
-nav a:hover {
+body.light-theme nav a:hover {
   text-decoration: underline;
 }
 
-.container {
-  max-width: 700px;
-  margin: auto;
-  background: #2b2b2b;
-  padding: 2em;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+body.light-theme .container {
+  background: #ffffff;
+  color: #333;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-h1, h2 {
+body.light-theme .button,
+body.light-theme .platform-link {
+  background: #e8dcd0;
+  color: #3e3e3e;
+}
+
+body.light-theme .button:hover,
+body.light-theme .platform-link:hover {
+  background: #d9cfc3;
+}
+
+/* Dark theme (pink punk) - your existing styles */
+/* Wrap all your dark styles under .dark-theme */
+
+body.dark-theme {
+  background-color: #1a1a1a;
+  color: #fceaff;
+}
+
+body.dark-theme nav {
+  background-color: #2a2a2a;
+}
+
+body.dark-theme nav a {
   color: #ff77aa;
 }
 
-.link-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  margin-top: 1.5em;
+body.dark-theme nav a:hover {
+  text-decoration: underline;
 }
 
-.platform-link {
-  display: flex;
-  align-items: center;
+body.dark-theme .container {
+  background: #2b2b2b;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .button,
+body.dark-theme .platform-link {
   background: #333;
-  padding: 1em;
-  border-radius: 12px;
-  transition: background 0.3s ease;
-  text-decoration: none;
   color: #fceaff;
-  box-shadow: 0 0 0 transparent;
 }
 
-.platform-link:hover {
+body.dark-theme .button:hover,
+body.dark-theme .platform-link:hover {
   background: #444;
   box-shadow: 0 0 10px #ff77aa80;
-}
-
-.platform-link img {
-  width: 40px;
-  height: 40px;
-  margin-right: 1em;
-  border-radius: 8px;
-  object-fit: cover;
 }
