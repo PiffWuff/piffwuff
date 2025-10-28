@@ -1,258 +1,693 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>All sorts of links...</title>
-  <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Midnight Chatter</title>
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
-
     * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-    body {
       margin: 0;
       padding: 0;
-      font-family: 'Quicksand', sans-serif;
-      background-color: #ffeef4;
-      color: #5a4a4a;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    body.dark-theme {
-      background-color: #121212;
-      color: #fceaff;
+      box-sizing: border-box;
     }
 
-    #theme-toggle {
+    :root {
+      --bg-primary: rgba(10,7,11,0.9);
+      --bg-secondary: rgba(14,9,15,0.86);
+      --pink: #d4a5b8;
+      --green: #8ba690;
+      --text-light: #9aa9a3;
+      --dark-base: rgba(7, 6, 10, 0.86);
+    }
+
+    body {
+      font-family: 'Libre Baskerville', serif;
+      background: url('https://image.cdn2.seaart.me/2025-10-02/d3fansle878c73alvd90/a89d54b35d13e74b7f4a00b92139aa13_high.webp');
+      background-size: cover;
+      background-attachment: fixed;
+      color: var(--pink);
+      overflow-x: hidden;
+      transition: background 500ms ease;
+    }
+
+    body.light-mode {
+      background: linear-gradient(135deg, #c4a5b0 0%, #a8bfa8 50%, #d4c5b8 100%),
+                  url('https://image.cdn2.seaart.me/2025-10-02/d3fbqjte878c73fgbsc0/13b9cb140e5fd5705691904e7d2dcc7d_high.webp');
+      background-blend-mode: overlay;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
+    body.light-mode {
+      --bg-primary: rgba(212, 185, 195, 0.75);
+      --bg-secondary: rgba(200, 170, 180, 0.7);
+      --pink: #8b4a5f;
+      --green: #4a6b52;
+      --text-light: #5a6a5d;
+      --dark-base: rgba(80, 60, 50, 0.3);
+    }
+
+    /* LOADING SCREEN */
+    #loading-screen {
       position: fixed;
-      top: 1em;
-      right: 1em;
-      font-size: 1.4rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      z-index: 1001;
-    }
-
-    nav {
-      position: sticky;
       top: 0;
-      background: #fcd6e1;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(10,7,11,0.98), rgba(14,9,15,0.96));
       display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 1em;
-      padding: 1em;
-      border-bottom: 3px solid #ffddea;
+      z-index: 9999;
+      transition: opacity 1s ease;
+    }
+
+    #loading-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-title {
+      font-family: 'MedievalSharp', serif;
+      font-size: 3rem;
+      color: #d4a5b8;
+      text-shadow: 
+        0 0 20px rgba(212, 165, 184, 0.4),
+        0 0 40px rgba(139, 166, 144, 0.3);
+      margin-bottom: 2rem;
+      animation: flicker 3s infinite;
+    }
+
+    .loading-subtitle {
+      font-size: 1.2rem;
+      color: #8ba690;
+      margin-bottom: 3rem;
+    }
+
+    .enter-button {
+      padding: 1rem 3rem;
+      background: linear-gradient(180deg, rgba(12,8,14,0.9), rgba(16,10,16,0.86));
+      border: 2px solid #d4a5b8;
+      color: #d4a5b8;
+      font-family: 'MedievalSharp', serif;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 500ms ease;
+      border-radius: 5px;
+    }
+
+    .enter-button:hover {
+      background: rgba(212, 165, 184, 0.1);
+      box-shadow: 0 0 20px rgba(212, 165, 184, 0.3);
+      transform: scale(1.05);
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    /* MAIN CONTENT */
+    #main-content {
+      opacity: 0;
+      transition: opacity 1s ease;
+      min-height: 100vh;
+    }
+
+    #main-content.visible {
+      opacity: 1;
+    }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
       z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    }
-    body.dark-theme nav {
-      background: #1f1f1f;
-      border-bottom: 3px solid #333;
-    }
-
-    nav a {
-      background: #ffedf6;
-      color: #5a4a4a;
-      padding: 0.5em 1em;
-      border-radius: 12px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.3s, color 0.3s;
-    }
-    nav a:hover {
-      background: #ffd6eb;
-    }
-    body.dark-theme nav a {
-      background: #333;
-      color: #fceaff;
-    }
-    body.dark-theme nav a:hover {
-      background: #444;
+      background: var(--bg-primary);
+      border: 2px solid var(--pink);
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: all 500ms ease;
+      backdrop-filter: blur(10px);
     }
 
-    .container {
-      max-width: 800px;
-      margin: 3em auto;
-      background: #fff0f6;
-      padding: 2em;
-      border-radius: 20px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      transition: background-color 0.3s, color 0.3s;
-    }
-    body.dark-theme .container {
-      background: #2b2b2b;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    .theme-toggle:hover {
+      transform: scale(1.1) rotate(10deg);
+      box-shadow: 0 0 20px rgba(212, 165, 184, 0.4);
     }
 
-    section {
-      margin-bottom: 4em;
-      padding-bottom: 2em;
-      border-bottom: 2px dashed #ffcce2;
-    }
-    body.dark-theme section {
-      border-bottom: 2px dashed #444;
+    /* NAVIGATION BUTTONS */
+    .nav-buttons {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 999;
     }
 
-    h1, h2 {
+    .nav-button {
+      width: 80px;
+      height: 80px;
+      background: var(--bg-primary);
+      border: 2px solid var(--green);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 500ms ease;
       display: flex;
       align-items: center;
-      gap: 0.5em;
-      font-size: 1.5em;
-      border-bottom: 1px solid #ffbad6;
-      padding-bottom: 0.3em;
-    }
-    body.dark-theme h1, body.dark-theme h2 {
-      border-color: #ff4d9d;
-    }
-
-    .emoji-light, .emoji-dark {
-      display: none;
-    }
-    body.light-theme .emoji-light {
-      display: inline;
-    }
-    body.dark-theme .emoji-dark {
-      display: inline;
-    }
-
-    .platform-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.7em;
-      padding: 0.6em 1.2em;
-      border-radius: 12px;
-      font-weight: 600;
+      justify-content: center;
+      font-size: 2rem;
       text-decoration: none;
-      color: #3e3e3e;
-      background: #ffe2eb;
-      transition: background-color 0.3s, box-shadow 0.3s;
-      margin: 0.5em 0;
-    }
-    .platform-link:hover {
-      background: #fbd4e7;
-      box-shadow: 0 0 8px #ff77aaaa;
-    }
-    body.dark-theme .platform-link {
-      background: #333;
-      color: #fceaff;
-    }
-    body.dark-theme .platform-link:hover {
-      background: #444;
-      box-shadow: 0 0 12px #ff77aacc;
+      backdrop-filter: blur(10px);
+      position: relative;
     }
 
-    .platform-link img {
+    .nav-button:hover {
+      transform: translateX(-10px) rotate(-5deg);
+      box-shadow: 0 0 20px rgba(139, 166, 144, 0.4);
+      background: var(--bg-secondary);
+    }
+
+    .nav-button::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      right: 100%;
+      margin-right: 1rem;
+      background: var(--bg-primary);
+      color: var(--pink);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-family: 'MedievalSharp', serif;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 300ms ease;
+      border: 2px solid var(--pink);
+    }
+
+    .nav-button:hover::after {
+      opacity: 1;
+    }
+
+    /* HEADER */
+    .tavern-header {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(180deg, rgba(12,8,14,0.6), transparent);
+    }
+
+    .tavern-header h1 {
+      font-family: 'MedievalSharp', serif;
+      font-size: 4rem;
+      color: var(--green);
+      text-shadow: 
+        2px 2px 0 var(--dark-base),
+        0 0 30px rgba(139, 166, 144, 0.5);
+      margin-bottom: 1rem;
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    .tavern-header p {
+      font-size: 1.5rem;
+      color: var(--pink);
+      margin-bottom: 3rem;
+    }
+
+    .scroll-indicator {
+      font-size: 2rem;
+      color: var(--green);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 2px 2px 0 var(--dark-base), 0 0 30px rgba(139, 166, 144, 0.3); }
+      50% { text-shadow: 2px 2px 0 var(--dark-base), 0 0 50px rgba(139, 166, 144, 0.6); }
+    }
+
+    /* SECTIONS */
+    .tavern-section {
+      min-height: 100vh;
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .section-content-wrapper {
+      max-width: 900px;
+      width: 100%;
+      background: var(--bg-primary);
+      border: 3px solid var(--pink);
+      padding: 3rem;
+      border-radius: 15px;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      font-family: 'MedievalSharp', serif;
+      font-size: 2.5rem;
+      color: var(--pink);
+      margin-bottom: 2rem;
+      text-align: center;
+      text-shadow: 2px 2px 0 var(--dark-base);
+    }
+
+    .section-content {
+      color: var(--text-light);
+      line-height: 2;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    /* LANTERN CORNERS */
+    .lantern-corner {
+      position: absolute;
       width: 40px;
       height: 40px;
-      border-radius: 8px;
-      object-fit: cover;
+      background: radial-gradient(circle, var(--pink), transparent);
+      opacity: 0.6;
+      animation: lantern-glow 2s ease-in-out infinite;
     }
 
-    .button {
-      display: inline-block;
-      margin: 0.3em 0;
-      padding: 0.6em 1.2em;
-      border-radius: 12px;
-      font-weight: 600;
+    .lantern-corner.tl { top: -20px; left: -20px; }
+    .lantern-corner.tr { top: -20px; right: -20px; }
+    .lantern-corner.bl { bottom: -20px; left: -20px; }
+    .lantern-corner.br { bottom: -20px; right: -20px; }
+
+    @keyframes lantern-glow {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.2); }
+    }
+
+    /* LINKS GRID */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .link-card {
+      background: var(--bg-secondary);
+      border: 2px solid var(--green);
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
       text-decoration: none;
-      color: #3e3e3e;
-      background: #ffe2eb;
-      transition: background-color 0.3s, box-shadow 0.3s;
+      color: var(--green);
+      font-family: 'MedievalSharp', serif;
+      font-size: 1.2rem;
+      transition: all 500ms ease;
+      position: relative;
+      overflow: hidden;
     }
-    .button:hover {
-      background: #fbd4e7;
-      box-shadow: 0 0 8px #ff77aaaa;
+
+    .link-card::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(139, 166, 144, 0.2), transparent);
+      transform: translate(-50%, -50%);
+      transition: width 500ms ease, height 500ms ease;
+      border-radius: 50%;
     }
-    body.dark-theme .button {
-      background: #333;
-      color: #fceaff;
+
+    .link-card:hover::before {
+      width: 300px;
+      height: 300px;
     }
-    body.dark-theme .button:hover {
-      background: #444;
-      box-shadow: 0 0 12px #ff77aacc;
+
+    .link-card:hover {
+      transform: translateY(-10px) rotate(2deg);
+      box-shadow: 0 10px 30px rgba(139, 166, 144, 0.3);
+      border-color: var(--pink);
+      color: var(--pink);
+    }
+
+    .link-card .emoji {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    /* CONTACT SECTION */
+    .contact-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      width: 100%;
+    }
+
+    .contact-item {
+      background: var(--bg-secondary);
+      border: 2px solid var(--pink);
+      padding: 1.5rem;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      transition: all 500ms ease;
+      cursor: pointer;
+    }
+
+    .contact-item:hover {
+      transform: translateX(10px);
+      box-shadow: 0 5px 20px rgba(212, 165, 184, 0.3);
+    }
+
+    .contact-item .emoji {
+      font-size: 2.5rem;
+    }
+
+    .contact-item .text {
+      flex: 1;
+    }
+
+    .contact-item .label {
+      font-family: 'MedievalSharp', serif;
+      color: var(--pink);
+      font-size: 1.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .contact-item .value {
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+
+    /* SUPPORT SECTION */
+    .support-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .support-card {
+      background: var(--bg-secondary);
+      border: 3px solid var(--green);
+      padding: 2.5rem;
+      border-radius: 15px;
+      text-align: center;
+      min-width: 250px;
+      transition: all 500ms ease;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    .support-card:hover {
+      transform: scale(1.05) rotate(-2deg);
+      box-shadow: 0 10px 40px rgba(139, 166, 144, 0.4);
+      border-color: var(--pink);
+    }
+
+    .support-card .emoji {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .support-card .title {
+      font-family: 'MedievalSharp', serif;
+      color: var(--pink);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .support-card .desc {
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+
+    /* FOOTER */
+    .tavern-footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--green);
+      font-family: 'MedievalSharp', serif;
+      background: linear-gradient(transparent, rgba(12,8,14,0.8));
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-buttons {
+        position: fixed;
+        bottom: 1rem;
+        right: 50%;
+        transform: translateX(50%);
+        flex-direction: row;
+        top: unset;
+      }
+
+      .nav-button {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+      }
+
+      .nav-button::after {
+        display: none;
+      }
+
+      .theme-toggle {
+        top: 1rem;
+        right: 1rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .tavern-header h1 {
+        font-size: 2.5rem;
+      }
+
+      .section-content-wrapper {
+        padding: 2rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <button id="theme-toggle" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">☁️</button>
 
-  <nav>
-    <a href="#home">🏡</a>
-    <a href="#about">🪞</a>
-    <a href="#chat">📜</a>
-    <a href="#support">💖</a>
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen">
+    <h1 class="loading-title">Welcome to the</h1>
+    <h2 class="loading-subtitle">Midnight Chatter</h2>
+    <button class="enter-button" onclick="enterTavern()">🦊 Enter the Tavern 🍺</button>
+  </div>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">
+    <span id="theme-icon">🌙</span>
+  </button>
+
+  <!-- NAVIGATION BUTTONS -->
+  <nav class="nav-buttons">
+    <a href="#about" class="nav-button" data-tooltip="About Me">🦊</a>
+    <a href="#links" class="nav-button" data-tooltip="My Haunts">🍺</a>
+    <a href="#contact" class="nav-button" data-tooltip="Contact">📜</a>
+    <a href="#support" class="nav-button" data-tooltip="Support">🪙</a>
   </nav>
 
-  <div class="container">
-    <section id="home">
-      <h1><span class="emoji-light">🌷</span><span class="emoji-dark">🕯️</span> Hi loves</h1>
-      <p>I'm PiffWuff/Piff! I make chatbots <span class="emoji-light">🍓</span><span class="emoji-dark">💀</span> And chat with chatbots.</p>
-      <h2><span class="emoji-light">🪷</span><span class="emoji-dark">🦇</span> My bots live here!</h2>
-      <a href="https://crushon.ai/en/profile/b21d6c94-232a-11f0-bc15-62a593a1fb50?shared=true" target="_blank" class="platform-link">
-        <img src="assets/crushon.png" alt="CrushOn logo" /> <span class="emoji-light">🧁</span><span class="emoji-dark">🗝️</span> CrushOn.ai <span class="emoji-light">🧁</span><span class="emoji-dark">🗝️</span>
-      </a>
-      <a href="https://craveu.ai/user/svajxF2F" target="_blank" class="platform-link">
-        <img src="assets/craveu.png" alt="CraveU logo" /> <span class="emoji-light">🌸</span><span class="emoji-dark">⚰️</span> CraveU.ai <span class="emoji-light">🌸</span><span class="emoji-dark">⚰️</span>
-      </a>
-      <a href="https://linkin.love/creator/piffwuff" target="_blank" class="platform-link">
-        <img src="assets/linkinlove.png" alt="Linkin.Love logo" /> <span class="emoji-light">🌿</span><span class="emoji-dark">🥀</span> Linkin.Love <span class="emoji-light">🌿</span><span class="emoji-dark">🥀</span>
-      </a>
+  <!-- MAIN CONTENT -->
+  <div id="main-content">
+    
+    <!-- HEADER -->
+    <header class="tavern-header">
+      <h1>🦊 Midnight Chatter 🍺</h1>
+      <p>Where your souls gather.</p>
+      <div class="scroll-indicator">↓</div>
+    </header>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="tavern-section">
+      <div class="section-content-wrapper">
+        <div class="lantern-corner tl"></div>
+        <div class="lantern-corner tr"></div>
+        <div class="lantern-corner bl"></div>
+        <div class="lantern-corner br"></div>
+        
+        <h2 class="section-title">🦊 About the Barkeep</h2>
+        <div class="section-content">
+          <p>Heya! I'm PiffWuff, or Piff. Or Flynt. Whatever suits your fancy. I make AI chatbots!</p>
+          <br>
+          <p>I typically make submissive or switch men! Sometimes women, sometimes dominants, but very rarely.</p>
+        </div>
+      </div>
     </section>
 
-    <section id="about">
-      <h2><span class="emoji-light">🍓</span><span class="emoji-dark">💀</span> Who am I?</h2>
-      <p>I'm PiffWuff, Piff, Wuff, etc.</p>
-      <p>I started making bots not too long ago, and I am in love with it. It's just so fun to have a character come to life!</p>
-      <p>25, He/They Pronouns, 5'2", and yes, I don't like cheddar broccoli soup. 😂</p>
+    <!-- LINKS SECTION -->
+    <section id="links" class="tavern-section">
+      <div class="section-content-wrapper">
+        <div class="lantern-corner tl"></div>
+        <div class="lantern-corner tr"></div>
+        <div class="lantern-corner bl"></div>
+        <div class="lantern-corner br"></div>
+        
+        <h2 class="section-title">🍺 My Taverns</h2>
+        <div class="section-content">
+          <p>Find my various profiles on sites. Where I post my bots!</p>
+        </div>
+        
+        <div class="links-grid">
+          <a href="https://crushon.ai/en/profile/b21d6c94-232a-11f0-bc15-62a593a1fb50?shared=true" class="link-card">
+            <span class="emoji">🍷</span>
+            CrushOn.AI
+          </a>
+          <a href="https://linkin.love/creator/piffwuff" class="link-card">
+            <span class="emoji">🥃</span>
+            Linkin.Love
+          </a>
+          <a href="https://craveu.ai/user/svajxF2F" class="link-card">
+            <span class="emoji">🍸</span>
+            CraveU
+          </a>
+          <a href="https://janitorai.com/profiles/6fa628ca-4aea-4aeb-9ef0-10142e98cab9_profile-of-piff-wuff" class="link-card">
+            <span class="emoji">🍹</span>
+            Janitor.AI
+          </a>
+        </div>
+      </div>
     </section>
 
-    <section id="chat">
-      <h2><span class="emoji-light">🫧</span><span class="emoji-dark">🌙</span> Chat with me!</h2>
-      <p>I'm friendly, so please feel free to chat! My DMs are always open, though I do sleep from 12AM-6/7AM CST.</p>
-      <ul>
-        <li><strong><span class="emoji-light">🍓</span><span class="emoji-dark">💀</span> Discord:</strong> piffwuff <span class="emoji-light">🍓</span><span class="emoji-dark">💀</span></li>
-        <li><a href="" class="button" target="_blank"><span class="emoji-light">🫧</span><span class="emoji-dark">🌙</span> Discord Server [TBA] <span class="emoji-light">🫧</span><span class="emoji-dark">🌙</span></a></li>
-      </ul>
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="tavern-section">
+      <div class="section-content-wrapper">
+        <div class="lantern-corner tl"></div>
+        <div class="lantern-corner tr"></div>
+        <div class="lantern-corner bl"></div>
+        <div class="lantern-corner br"></div>
+        
+        <h2 class="section-title">📜 Chat with me</h2>
+        <div class="section-content">
+          <p>Wanna chat? Find me on discord!</p>
+        </div>
+        
+        <div class="contact-methods">
+          <div class="contact-item" onclick="window.open('https://discord.gg/uXQQRZYZk2')">
+            <span class="emoji">💬</span>
+            <div class="text">
+              <div class="label">Discord Server</div>
+              <div class="value">𝓛𝓾𝓷𝓪𝓻 𝓐𝓽𝓮𝓵𝓲𝓮𝓻</div>
+            </div>
+          </div>
+          <div class="contact-item" onclick="window.copyToClipboard('piffwuff')">
+            <span class="emoji">💬</span>
+            <div class="text">
+              <div class="label">Add me on Discord</div>
+              <div class="value">@piffwuff</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="support">
-      <h2><span class="emoji-light">✨</span><span class="emoji-dark">🕸️</span> Support Me</h2>
-      <p>If you've been particularly enjoying the bots, consider popping by my Ko-Fi. Nothing special there, really, just a place to support or commission me if you want!</p>
-      <p>If you want to commission something, we can discuss that, of course! But my request bot on Crushon, or even my DMs on discord is better for that!</p>
-      <p>Mostly because I'm happy to do bots for free unless it's particularly out of my interests.</p>
-      <ul>
-        <li><a href="https://ko-fi.com/piffwuff" class="button" target="_blank"><span class="emoji-light">✨</span><span class="emoji-dark">🕸️</span> Ko-fi <span class="emoji-light">✨</span><span class="emoji-dark">🕸️</span></a></li>
-        <li><a href="https://crushon.ai/en/character/a08a3a47-56e6-4f3e-a19d-613b9db022a2/details?shared=true" class="button" target="_blank"><span class="emoji-light">🌷</span><span class="emoji-dark">🕯️</span> Request Bot[CrushOn.AI] <span class="emoji-light">🌷</span><span class="emoji-dark">🕯️</span></a></li>
-      </ul>
+    <!-- SUPPORT SECTION -->
+    <section id="support" class="tavern-section">
+      <div class="section-content-wrapper">
+        <div class="lantern-corner tl"></div>
+        <div class="lantern-corner tr"></div>
+        <div class="lantern-corner bl"></div>
+        <div class="lantern-corner br"></div>
+        
+        <h2 class="section-title">🪙 Support me</h2>
+        <div class="section-content">
+          <p>Entirely optional. I just enjoy making bots!</p>
+        </div>
+        
+        <div class="support-options">
+          <a href="https://ko-fi.com/piffwuff" class="support-card">
+            <span class="emoji">☕</span>
+            <div class="title">Ko-fi</div>
+            <div class="desc">Support me on Ko-Fi!</div>
+          </a>
+      </div>
     </section>
+
+    <!-- FOOTER -->
+    <footer class="tavern-footer">
+      <p>☽ The Midnight Chatter • Where desires turn to drinks ☾</p>
+    </footer>
+
   </div>
 
   <script>
-    const toggleBtn = document.getElementById('theme-toggle');
-    const body = document.body;
-    const savedTheme = localStorage.getItem('theme') || 'light-theme';
-    body.classList.add(savedTheme);
-    updateThemeIcon(savedTheme);
+    function enterTavern() {
+      const loadingScreen = document.getElementById('loading-screen');
+      const mainContent = document.getElementById('main-content');
+      
+      loadingScreen.classList.add('fade-out');
+      
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        mainContent.classList.add('visible');
+      }, 1000);
+    }
 
-    toggleBtn.addEventListener('click', () => {
-      if (body.classList.contains('light-theme')) {
-        body.classList.replace('light-theme', 'dark-theme');
-        localStorage.setItem('theme', 'dark-theme');
-        updateThemeIcon('dark-theme');
-      } else {
-        body.classList.replace('dark-theme', 'light-theme');
-        localStorage.setItem('theme', 'light-theme');
-        updateThemeIcon('light-theme');
-      }
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+      const icon = document.getElementById('theme-icon');
+      icon.textContent = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text);
+      alert('Copied to clipboard: ' + text);
+    }
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
     });
 
-    function updateThemeIcon(theme) {
-      toggleBtn.textContent = theme === 'light-theme' ? '☁️' : '🔮';
-    }
+    // Auto-enter after 5 seconds
+    setTimeout(() => {
+      if (!document.getElementById('loading-screen').classList.contains('fade-out')) {
+        enterTavern();
+      }
+    }, 5000);
   </script>
+
 </body>
 </html>
